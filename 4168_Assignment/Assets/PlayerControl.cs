@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 [RequireComponent(typeof(CharacterController), typeof(PlayerInput))]
 public class PlayerControl : MonoBehaviour
@@ -11,6 +12,7 @@ public class PlayerControl : MonoBehaviour
     public float mouseSensitivity = 2f;
     public float pitchClamp = 80f;
     public bool isGrounded;
+    public bool isAttacking;
     [SerializeField] private Animator _animator;
 
 
@@ -30,6 +32,7 @@ public class PlayerControl : MonoBehaviour
         move = input.actions["Move"];
         look = input.actions["Look"];
         jump = input.actions["Jump"];
+        isAttacking = false;
         
         // Ensure all Move() calls check collisions, even for tiny distances
         controller.minMoveDistance = 0f;
@@ -50,12 +53,14 @@ public class PlayerControl : MonoBehaviour
             }
         }
 
+        // control the jump and then fall animation
         if(velocity.y < 0){
             _animator.SetBool("isJumping", false);
             _animator.SetBool("isGrounded", false);
             _animator.SetBool("isFalling", true);
         } 
-        
+
+        // resume animation after jump landed
         if(isGrounded) {
             _animator.SetBool("isGrounded", true);
             _animator.SetBool("isFalling", false);           
@@ -85,5 +90,17 @@ public class PlayerControl : MonoBehaviour
             _animator.SetBool("isRunning", false);
 
         }
+
+        if (Mouse.current.leftButton.wasPressedThisFrame) {
+            _animator.SetTrigger("Punch");
+            isAttacking = true;
+            StartCoroutine(ResetAttackAfterDelay(1f)); // Call coroutine
+        }
+
+    }
+    
+    private IEnumerator ResetAttackAfterDelay(float delay){
+        yield return new WaitForSeconds(delay);
+        isAttacking = false;
     }
 }

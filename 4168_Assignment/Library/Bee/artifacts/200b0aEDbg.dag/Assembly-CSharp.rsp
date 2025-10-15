@@ -399,8 +399,11 @@
 -analyzer:"/Applications/Unity/Hub/Editor/6000.0.59f2/Unity.app/Contents/Tools/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll"
 -analyzer:"/Applications/Unity/Hub/Editor/6000.0.59f2/Unity.app/Contents/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll"
 -analyzer:"/Applications/Unity/Hub/Editor/6000.0.59f2/Unity.app/Contents/Tools/Unity.SourceGenerators/Unity.UIToolkit.SourceGenerator.dll"
+"Assets/EnemyAI.cs"
+"Assets/EnemyDamageControl.cs"
 "Assets/PlayerCharacter.cs"
 "Assets/PlayerControl.cs"
+"Assets/PlayerDamageControl.cs"
 -langversion:9.0
 /deterministic
 /optimize-
